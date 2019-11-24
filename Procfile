@@ -1,1 +1,1 @@
-web: gunicorn cosine_similarity:app
+gunicorn cosine_similarity:app
