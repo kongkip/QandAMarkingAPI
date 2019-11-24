@@ -9,7 +9,7 @@ nltk.download("stopwords")
 nltk.download("punkt")
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["POST"])
 def index():
     if request.method == "POST":
         x = request.form["correct answer"]
