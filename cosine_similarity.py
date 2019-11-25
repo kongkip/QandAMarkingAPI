@@ -61,35 +61,36 @@ def index():
         all_list = [x_list + y_list]
 
         word = 0
-        for i in all_list:
-            if i == "Not" or "not":
-                word = "sentence contains negativity"
-                print(i)
-                break
+        # for i in all_list:
+        #     if i == "Not" or "not":
+        #         word = "sentence contains negativity"
+        #         print(i)
+        #         break
+        #     else:
+        sw = stopwords.words("english")
+
+        l1 = []
+        l2 = []
+
+        x_set = {w for w in x_list if w not in sw}
+        y_set = {w for w in y_list if w not in sw}
+
+        r_vector = x_set.union(y_set)
+        for w in r_vector:
+            if w in x_set:
+                l1.append(1)
             else:
-                sw = stopwords.words("english")
+                l1.append(0)
+            if w in y_set:
+                l2.append(1)
+            else:
+                l2.append(0)
+        c = 0
+        for j in range(len(r_vector)):
+            c += l1[j] * l2[j]
+        cosine = c / float((sum(l1) * sum(l2)) ** 0.5)
+        word = {"similarity": cosine * 100}
 
-                l1 = []
-                l2 = []
-
-                x_set = {w for w in x_list if w not in sw}
-                y_set = {w for w in y_list if w not in sw}
-
-                r_vector = x_set.union(y_set)
-                for w in r_vector:
-                    if w in x_set:
-                        l1.append(1)
-                    else:
-                        l1.append(0)
-                    if w in y_set:
-                        l2.append(1)
-                    else:
-                        l2.append(0)
-                c = 0
-                for j in range(len(r_vector)):
-                    c += l1[j] * l2[j]
-                cosine = c / float((sum(l1) * sum(l2)) ** 0.5)
-                word = cosine * 100
         return jsonify(word)
     return render_template("home.html")
 
