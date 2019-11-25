@@ -5,8 +5,8 @@ from nltk.tokenize import word_tokenize
 
 app = Flask(__name__)
 
-nltk.download("stopwords")
-nltk.download("punkt")
+# nltk.download("stopwords")
+# nltk.download("punkt")
 
 
 @app.route("/", methods=["GET", "POST"])
